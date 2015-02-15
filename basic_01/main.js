@@ -12,6 +12,10 @@ function init(){
 
 	// init the mouse vector
 	mouse = new THREE.Vector2();
+
+	// init the raycaster
+	raycaster = new THREE.Raycaster();
+
 	// light init
 	var light = new THREE.DirectionalLight(0xffffff, 1);
 	light.position.set(1, 1, 1).normalize();
@@ -53,8 +57,17 @@ function onMouseMove(event){
 	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 }
 
+function checkRayCasting(){
+	raycaster.setFromCamera(mouse, camera);
+	var intersects = raycaster.intersectObjects(scene.children);
+	if (intersects.length > 0){
+		console.log("TOUCH!!");
+	}
+}
+
 function render(){
 	modifyRotationOfCubes();
+	checkRayCasting();
 	requestAnimationFrame(render);
 	renderer.render(scene, camera);
 }
