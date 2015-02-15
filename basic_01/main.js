@@ -31,7 +31,8 @@ function modifyRotationOfCubes(){
 }
 
 function modifyRotationOfOneCube(element, index, array){
-	element.rotation.set( element.rotation.x - Math.random(), element.rotation.y - Math.random(), element.rotation.y - Math.random() );
+	var pondRotation = 10;
+	element.rotation.set( element.rotation.x + Math.random()/pondRotation, element.rotation.y + Math.random()/pondRotation, element.rotation.y + Math.random()/pondRotation );
 }
 
 function render(){
