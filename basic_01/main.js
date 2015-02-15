@@ -20,7 +20,7 @@ function createSceneElements(){
 		//var grayness = Math.random() * 0.5 + 0.25;	
 		//material.color.setRGB(grayness, grayness, grayness);
 		//cube.grayness = grayness;
-		cube = new THREE.Mesh(geometryCube, material);
+		cube = new THREE.Mesh(geometryCube, new THREE.MeshLambertMaterial({color: Math.random() * 0xffffff }));
 	    cube.position.set( range * (0.5 - Math.random()), range * (0.5 - Math.random()), range * (0.5 - Math.random()) );
 	    cube.rotation.set( Math.random(), Math.random(), Math.random() );
 		scene.add(cube);
