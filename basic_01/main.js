@@ -1,4 +1,4 @@
-var scene, camera, renderer;
+var scene, camera, renderer, raycaster;
 var allCubes = [];
 
 function init(){
@@ -18,9 +18,11 @@ function init(){
 	var geometryCube = new THREE.BoxGeometry(1, 1, 1);
 	//var material = new THREE.MeshBasicMaterial({color:0x00fff1});
 
+	// generation of the N cubes
+	var N = 200;
 	// use a range for the random position of the cubes
 	var range = 50;
-	for(i = 0; i < 200; i++){
+	for(i = 0; i < N; i++){
 		var cube = new THREE.Mesh(geometryCube, new THREE.MeshLambertMaterial({color: Math.random() * 0xffffff }));
 	    cube.position.set( range * (0.5 - Math.random()), range * (0.5 - Math.random()), range * (0.5 - Math.random()) );
 	    cube.rotation.set( Math.random(), Math.random(), Math.random() );
@@ -30,6 +32,8 @@ function init(){
 		scene.add(cube);
 		allCubes[allCubes.length] = cube;
 	}
+
+	document.addEventListener('mousemove', onMouseMove, false);
 }
 
 function modifyRotationOfCubes(){
@@ -39,6 +43,10 @@ function modifyRotationOfCubes(){
 function modifyRotationOfOneCube(element, index, array){
 	var pondRotation = 10;
 	element.rotation.set( element.rotation.x + Math.random()/pondRotation, element.rotation.y + Math.random()/pondRotation, element.rotation.y + Math.random()/pondRotation );
+}
+
+function onMouseMove(){
+	console.log("onMouseMove");
 }
 
 function render(){
