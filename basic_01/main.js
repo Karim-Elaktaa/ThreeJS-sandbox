@@ -1,4 +1,4 @@
-var scene, camera, renderer, raycaster;
+var scene, camera, renderer, raycaster, mouse;
 var allCubes = [];
 
 function init(){
@@ -10,6 +10,8 @@ function init(){
 	document.body.appendChild(renderer.domElement);
 	camera.position.z = 10;
 
+	// init the mouse vector
+	mouse = new THREE.Vector2();
 	// light init
 	var light = new THREE.DirectionalLight(0xffffff, 1);
 	light.position.set(1, 1, 1).normalize();
@@ -45,8 +47,10 @@ function modifyRotationOfOneCube(element, index, array){
 	element.rotation.set( element.rotation.x + Math.random()/pondRotation, element.rotation.y + Math.random()/pondRotation, element.rotation.y + Math.random()/pondRotation );
 }
 
-function onMouseMove(){
-	console.log("onMouseMove");
+function onMouseMove(event){
+	event.preventDefault();
+	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 }
 
 function render(){
