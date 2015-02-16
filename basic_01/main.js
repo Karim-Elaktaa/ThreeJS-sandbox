@@ -1,4 +1,4 @@
-var scene, camera, renderer, raycaster, mouse;
+var scene, camera, renderer, raycaster, mouse, lastModifiedCube;
 var allCubes = [];
 
 function init(){
@@ -60,8 +60,21 @@ function onMouseMove(event){
 function checkRayCasting(){
 	raycaster.setFromCamera(mouse, camera);
 	var intersects = raycaster.intersectObjects(scene.children);
-	if (intersects.length > 0){
-		console.log("TOUCH!!");
+	if (intersects.length > 0 && intersects[0].object){
+		if(lastModifiedCube != intersects[0].object){
+			if(lastModifiedCube){
+				lastModifiedCube.material.emissive.setHex(lastModifiedCube.currentHex);
+			}
+			lastModifiedCube = intersects[0].object;
+			lastModifiedCube.currentHex = lastModifiedCube.material.emissive.getHex();
+			lastModifiedCube.material.emissive.setHex( 0xff0000 );
+		}
+	}
+	else{
+		if(lastModifiedCube){
+			lastModifiedCube.material.emissive.setHex(lastModifiedCube.currentHex);
+			lastModifiedCube = null;
+		}
 	}
 }
 
