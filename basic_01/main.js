@@ -56,6 +56,7 @@ function init(){
 	window.addEventListener('resize', onWindowResize, false);
 	// keyboard inputs
 	window.addEventListener('keydown', checkKeyPressed, false);
+	window.addEventListener('keyup', checkKeyReleased, false);
 }
 
 function modifyRotationOfCubes(){
@@ -109,9 +110,31 @@ function checkKeyPressed(e){
 	}
 }
 
+function checkKeyReleased(e){
+	if(e.keyCode == 37){
+		// left
+		controls.left = false;
+	}
+	
+	if(e.keyCode == 38){
+		// up
+		controls.up = false;
+	}
+	
+	if(e.keyCode == 39){
+		// right
+		controls.right = false;
+	}
+
+	if(e.keyCode == 40){
+		// down
+		controls.down = false;
+	}
+}
+
 function updateCameraMvt(){
-	var mvtSpeed = 0.01;
-	var rotSpeed = 0.001;
+	var mvtSpeed = 0.1;
+	var rotSpeed = 0.01;
 	if(controls.up && !controls.down){
 		camera.translateZ(-mvtSpeed);
 	}
