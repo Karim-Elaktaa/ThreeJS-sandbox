@@ -1,4 +1,10 @@
-var scene, camera, renderer, raycaster, mouse, lastModifiedCube;
+var scene, camera, renderer, raycaster, mouse, lastModifiedCube, 
+	controls = {
+		left:false,
+		right:false,
+		up:false,
+		down:false
+	};
 var allCubes = [];
 
 function init(){
@@ -12,6 +18,12 @@ function init(){
 
 	// init the mouse vector
 	mouse = new THREE.Vector2();
+
+	// init the controls var
+	controls.left = false; 
+	controls.right = false;
+	controls.up = false;
+	controls.down = false;
 
 	// init the raycaster
 	raycaster = new THREE.Raycaster();
@@ -42,6 +54,8 @@ function init(){
 	document.addEventListener('mousemove', onMouseMove, false);
 	document.addEventListener('click', onClick, false);
 	window.addEventListener('resize', onWindowResize, false);
+	// keyboard inputs
+	window.addEventListener('keydown', checkKeyPressed, false);
 }
 
 function modifyRotationOfCubes(){
@@ -49,7 +63,7 @@ function modifyRotationOfCubes(){
 }
 
 function modifyRotationOfOneCube(element, index, array){
-	var pondRotation = 10;
+	var pondRotation = 30;
 	element.rotation.set( element.rotation.x + Math.random()/pondRotation, element.rotation.y + Math.random()/pondRotation, element.rotation.y + Math.random()/pondRotation );
 }
 
@@ -59,6 +73,7 @@ function onWindowResize(){
 	renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
+// LISTENERS
 function onMouseMove(event){
 	event.preventDefault();
 	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
@@ -70,6 +85,48 @@ function onClick(){
 		scene.remove(lastModifiedCube);
 		lastModifiedCube = null;
 	}
+}
+
+function checkKeyPressed(e){
+	if(e.keyCode == 37){
+		// left
+		controls.left = true;
+	}
+	
+	if(e.keyCode == 38){
+		// up
+		controls.up = true;
+	}
+	
+	if(e.keyCode == 39){
+		// right
+		controls.right = true;
+	}
+
+	if(e.keyCode == 40){
+		// down
+		controls.down = true;
+	}
+}
+
+function updateCameraMvt(){
+	var mvtSpeed = 0.01;
+	var rotSpeed = 0.001;
+	if(controls.up && !controls.down){
+		camera.translateZ(-mvtSpeed);
+	}
+	
+	if(controls.down && !controls.up){
+		camera.translateZ(mvtSpeed);
+	}
+
+	if(controls.left && !controls.right){
+		camera.rotateY(rotSpeed);
+	}
+
+	if(controls.right && !controls.left){
+		camera.rotateY(-rotSpeed);
+	}		
 }
 
 function checkRayCasting(){
@@ -96,6 +153,7 @@ function checkRayCasting(){
 function render(){
 	modifyRotationOfCubes();
 	checkRayCasting();
+	updateCameraMvt();
 	requestAnimationFrame(render);
 	renderer.render(scene, camera);
 }
