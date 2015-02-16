@@ -31,7 +31,7 @@ function init(){
 	for(i = 0; i < N; i++){
 		var cube = new THREE.Mesh(geometryCube, new THREE.MeshLambertMaterial({color: Math.random() * 0xffffff }));
 	    cube.position.set( range * (0.5 - Math.random()), range * (0.5 - Math.random()), range * (0.5 - Math.random()) );
-	    cube.rotation.set( Math.random(), Math.random(), Math.random() );
+	    //cube.rotation.set( Math.random(), Math.random(), Math.random() );
 		cube.scale.x = Math.random() + 0.7;
 		cube.scale.y = Math.random() + 0.7;
 		cube.scale.z = Math.random() + 0.7;
@@ -40,6 +40,7 @@ function init(){
 	}
 
 	document.addEventListener('mousemove', onMouseMove, false);
+	document.addEventListener('click', onClick, false);
 }
 
 function modifyRotationOfCubes(){
@@ -55,6 +56,13 @@ function onMouseMove(event){
 	event.preventDefault();
 	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
 	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+}
+
+function onClick(){
+	if(lastModifiedCube){
+		scene.remove(lastModifiedCube);
+		lastModifiedCube = null;
+	}
 }
 
 function checkRayCasting(){
