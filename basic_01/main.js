@@ -41,6 +41,7 @@ function init(){
 
 	document.addEventListener('mousemove', onMouseMove, false);
 	document.addEventListener('click', onClick, false);
+	window.addEventListener('resize', onWindowResize, false);
 }
 
 function modifyRotationOfCubes(){
@@ -50,6 +51,12 @@ function modifyRotationOfCubes(){
 function modifyRotationOfOneCube(element, index, array){
 	var pondRotation = 10;
 	element.rotation.set( element.rotation.x + Math.random()/pondRotation, element.rotation.y + Math.random()/pondRotation, element.rotation.y + Math.random()/pondRotation );
+}
+
+function onWindowResize(){
+	camera.aspect = window.innerWidth / window.innerHeight;
+	camera.updateProjectionMatrix();
+	renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
 function onMouseMove(event){
