@@ -37,7 +37,7 @@ function init(){
 	//var material = new THREE.MeshBasicMaterial({color:0x00fff1});
 
 	// generation of the N cubes
-	var N = 200;
+	var N = 1000;
 	// use a range for the random position of the cubes
 	var range = 50;
 	for(i = 0; i < N; i++){
