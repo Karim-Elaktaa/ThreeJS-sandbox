@@ -1,4 +1,4 @@
-var scene, camera, renderer, raycaster, mouse, lastModifiedCube;
+var scene, camera, renderer, raycaster, mouse;
 
 function init(){
 	// init the basic elements
